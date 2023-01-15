@@ -10,8 +10,8 @@ export const TabTwo = () => {
             className="input input_value hourMatch"
             placeholder="Ilość"
             inputMode="decimal"
-          ></input>
-          <input id="hour" className="input input_goal hour" value="0"></input>
+          />
+          <input id="hour" className="input input_goal hour" value="0" />
         </div>
       </form>
       <form className="input form_operacji" data-id="uoperacji">
@@ -23,8 +23,8 @@ export const TabTwo = () => {
             className="input input_value"
             placeholder="Ilość"
             inputMode="decimal"
-          ></input>
-          <input id="halfhour" className="input input_goal" value="0"></input>
+          />
+          <input id="halfhour" className="input input_goal" value="0" />
         </div>
       </form>
       <form className="input form_operacji" data-id="jazda">
@@ -35,8 +35,8 @@ export const TabTwo = () => {
             type="text"
             className="input input_value"
             placeholder="Godżiny"
-          ></input>
-          <input id="drive" className="input input_goal" value="0"></input>
+          />
+          <input id="drive" className="input input_goal" value="0" />
         </div>
       </form>
       <form className="input form_operacji" data-id="ujazda">
@@ -47,8 +47,8 @@ export const TabTwo = () => {
             type="number"
             className="input input_value"
             placeholder="Godżiny"
-          ></input>
-          <input id="halfhour" className="input input_goal" value="0"></input>
+          />
+          <input id="halfhour" className="input input_goal" value="0" />
         </div>
       </form>
       <form className="input form_operacji" data-id="dyzur">
@@ -60,8 +60,8 @@ export const TabTwo = () => {
             className="input input_value"
             placeholder="Dni"
             inputMode="decimal"
-          ></input>
-          <input id="payDays" className="input input_goal" value="0"></input>
+          />
+          <input id="payDays" className="input input_goal" value="0" />
         </div>
       </form>
       <form className="input form_operacji" data-id="weekend">
@@ -73,8 +73,8 @@ export const TabTwo = () => {
             className="input input_value"
             placeholder="Dni"
             inputMode="decimal"
-          ></input>
-          <input id="payDays" className="input input_goal" value="0"></input>
+          />
+          <input id="payDays" className="input input_goal" value="0" />
         </div>
       </form>
       <form className="input form_operacji" data-id="premia">
@@ -86,8 +86,8 @@ export const TabTwo = () => {
             className="input input_value"
             placeholder="Ilość"
             inputMode="decimal"
-          ></input>
-          <input id="premia" className="input input_goal" value="0"></input>
+          />
+          <input id="premia" className="input input_goal" value="0" />
         </div>
       </form>
       <p className="input_title-comentarz">Komentarz</p>

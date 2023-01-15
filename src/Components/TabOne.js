@@ -15,8 +15,17 @@ const getFullTime = () => {
   let min = today.getMinutes()
   if (min < 10) min = '0' + min
 
-  const fullDate = `${day}.${month}.${year} ${hour}:${min}`
+  let fullDate = `${day}.${month}.${year} ${hour}:${min}`
   return fullDate
+}
+
+const getLocalStorage = () => {
+  let table = localStorage.getItem('table')
+  if (table) {
+    return JSON.parse(localStorage.getItem('table'))
+  } else {
+    return []
+  }
 }
 
 export const TabOne = () => {
@@ -27,7 +36,7 @@ export const TabOne = () => {
     operacji: '',
     uwagi: '',
   })
-  const [table, setTable] = useState([])
+  const [table, setTable] = useState(getLocalStorage())
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -50,16 +59,13 @@ export const TabOne = () => {
     }
   }
 
-  //  const newPerson = {...person, id: new Date().getTime().toString()}
-  //  setPeople([...people, newPerson])
-  //  setPerson({firstName: '', email: '', age: ''})
+  const removeRow = (id) => {
+    setTable(table.filter((item) => item.id !== id))
+  }
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     getFullTime()
-  //     console.log('work')
-  //   }, 1000)
-  // }, [])
+  useEffect(() => {
+    localStorage.setItem('table', JSON.stringify(table))
+  }, [table])
 
   return (
     <section className="tab active" id="inputs">
@@ -142,7 +148,7 @@ export const TabOne = () => {
                   <td>{uwagi}</td>
                   <td>
                     <button class="usun">
-                      <FiTrash2 />
+                      <FiTrash2 onClick={() => removeRow(id)} />
                     </button>
                   </td>
                 </tr>
