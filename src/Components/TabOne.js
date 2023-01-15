@@ -1,69 +1,120 @@
+import {useEffect, useState} from 'react'
 import {FiTrash2} from 'react-icons/fi'
 
+const getFullTime = () => {
+  let today = new Date()
+
+  let day = today.getDate()
+  let month = today.getMonth() + 1
+  if (month < 10) month = '0' + month
+  let year = today.getFullYear()
+
+  let hour = today.getHours()
+  if (hour < 10) hour = '0' + hour
+
+  let min = today.getMinutes()
+  if (min < 10) min = '0' + min
+
+  const fullDate = `${day}.${month}.${year} ${hour}:${min}`
+  return fullDate
+}
+
 export const TabOne = () => {
+  const [row, setRow] = useState({
+    miejsce: '',
+    kilometry: '',
+    data: getFullTime(),
+    operacji: '',
+    uwagi: '',
+  })
+  const [table, setTable] = useState([])
+
+  const handleChange = (e) => {
+    const name = e.target.name
+    const value = e.target.value
+    setRow({...row, [name]: value})
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    if (row.miejsce && row.kilometry && row.data && row.operacji) {
+      const newRow = {...row, id: new Date().getTime().toString()}
+      setTable([...table, newRow])
+      setRow({
+        miejsce: '',
+        kilometry: '',
+        data: getFullTime(),
+        operacji: '',
+        uwagi: '',
+      })
+    }
+  }
+
+  //  const newPerson = {...person, id: new Date().getTime().toString()}
+  //  setPeople([...people, newPerson])
+  //  setPerson({firstName: '', email: '', age: ''})
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     getFullTime()
+  //     console.log('work')
+  //   }, 1000)
+  // }, [])
+
   return (
-    <div className="tab active" id="inputs">
-      <div className="form_wrapper">
-        <input className="miejsce" list="miejsce" placeholder="Miejsce" />
-        <datalist id="miejsce">
-          <option value="Valenciennes" />
-          <option value="Zeebrugge" />
-          <option value="Seneffe" />
-          <option value="Wallenius" />
-          <option value="ICO405" />
-          <option value="ICO502" />
-          <option value="C.RO" />
-          <option value="Serwis" />
-          <option value="Jazda(Utracone)" />
-          <option value="Operacji(Utracone)" />
-        </datalist>
+    <section className="tab active" id="inputs">
+      <form className="form_wrapper">
+        <input
+          type="text"
+          className="miejsce"
+          name="miejsce"
+          id="miejsce"
+          placeholder="Miejsce"
+          value={row.miejsce}
+          onChange={handleChange}
+        />
         <input
           type="number"
           inputMode="decimal"
           maxLength={7}
           className="kilometry"
+          name="kilometry"
+          id="kilometry"
           placeholder="Kilometry"
+          value={row.kilometry}
+          onChange={handleChange}
         />
         <input
           id="date"
           className="date"
-          value={() => {
-            let today = new Date()
-
-            let day = today.getDate()
-            let month = today.getMonth() + 1
-            if (month < 10) month = '0' + month
-            let year = today.getFullYear()
-
-            let hour = today.getHours()
-            if (hour < 10) hour = '0' + hour
-
-            let min = today.getMinutes()
-            if (min < 10) min = '0' + min
-
-            const fullDate = `${day}.${month}.${year} ${hour}:${min}`
-            return fullDate
-
-            // inputDate.value = `${day}.${month}.${year} ${hour}:${min}`
-
-            // if (hour < 19) {
-            //   body.classList.add('day-theme')
-            // } else if (hour > 8) {
-            //   body.classList.add('night-theme')
-            // }
-          }}
+          name="date"
+          defaultValue={getFullTime()}
+          value={row.getFullTime}
         />
         <input
           type="number"
           inputMode="decimal"
           className="operacji"
+          name="operacji"
+          id="operacji"
           placeholder="Ilosc operacji"
+          value={row.operacji}
+          onChange={handleChange}
         />
-        <input type="textarea" className="uwagi" placeholder="Uwagi" />
+        <input
+          type="textarea"
+          className="uwagi"
+          name="uwagi"
+          placeholder="Uwagi"
+          value={row.uwagi}
+          onChange={handleChange}
+        />
         <div className="button_wrapper">
-          <button className="ready_btn">Gotowe</button>
+          <button className="ready_btn" type="submit" onClick={handleSubmit}>
+            Gotowe
+          </button>
         </div>
-      </div>
+      </form>
 
       <div className="table_wrapper">
         <table id="table" className="table">
@@ -79,13 +130,31 @@ export const TabOne = () => {
               </th>
             </tr>
           </thead>
-          <tbody className="tbody"></tbody>
+          <tbody className="tbody">
+            {table.map((row, index) => {
+              const {id, miejsce, kilometry, data, operacji, uwagi} = row
+              return (
+                <tr className="table_row" key={index} id={id}>
+                  <td>{miejsce}</td>
+                  <td>{kilometry}</td>
+                  <td>{data}</td>
+                  <td>{operacji}</td>
+                  <td>{uwagi}</td>
+                  <td>
+                    <button class="usun">
+                      <FiTrash2 />
+                    </button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
         </table>
       </div>
       <div className="button_wrapper">
         <button className="remove_btn">Oczyszć</button>
         <div className="calculate"></div>
       </div>
-    </div>
+    </section>
   )
 }

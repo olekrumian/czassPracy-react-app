@@ -1,6 +1,6 @@
 export const TabTwo = () => {
   return (
-    <div className="tab operacji" id="tabs">
+    <section className="tab operacji" id="tabs">
       <form className="input form_operacji" data-id="operacji">
         <p className="input_title">Operacji</p>
         <div className="input_wrapper">
@@ -104,6 +104,6 @@ export const TabTwo = () => {
         <p className="wyplata">0</p>
       </div>
       <table className="tableTab"></table>
-    </div>
+    </section>
   )
 }

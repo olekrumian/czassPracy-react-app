@@ -80,6 +80,10 @@ input {
     display: block;
   }
 
+  .tab_btn {
+    background-color: var(--grey-color);
+  }
+
   .tab_btn.active {
     background-color: var(--bg-color);
     color: var(--font-color);
@@ -159,7 +163,7 @@ input {
     justify-content: space-around;
     align-items: center;
   }
-  input {
+  .form_wrapper input {
     margin: 1rem 0 0 0;
     padding: 0.5rem;
     width: 100%;
@@ -237,6 +241,10 @@ input {
 
   tr:nth-child(even) {
     background-color: #0079ea33;
+  }
+
+  .table_row td {
+    text-transform: capitalize;
   }
 
   .calculate {

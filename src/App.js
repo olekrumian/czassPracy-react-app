@@ -1,5 +1,5 @@
 import {TabOne} from './Components/TabOne'
-import {TabTwo} from './Components/TabTwo'
+// import {TabTwo} from './Components/TabTwo'
 import {TabBtn} from './Components/TabBtn'
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
     <div className="container">
       <TabBtn />
       <TabOne />
-      <TabTwo />
+      {/* <TabTwo /> */}
     </div>
   )
 }
