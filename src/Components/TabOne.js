@@ -158,7 +158,17 @@ export const TabOne = () => {
         </table>
       </div>
       <div className="button_wrapper">
-        <button className="remove_btn">Oczyszć</button>
+        <button
+          className="remove_btn"
+          onClick={() => {
+            if (window.confirm('Potwierdzić')) {
+              return setTable([])
+            }
+            return window.location.reload()
+          }}
+        >
+          Oczyszć
+        </button>
         <div className="calculate"></div>
       </div>
     </section>
