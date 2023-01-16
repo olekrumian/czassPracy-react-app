@@ -81,11 +81,11 @@ input {
   }
 
   .tab_btn {
-    background-color: rgb(250, 193, 250);
+    background-color: var(--nowhite-color);
   }
 
   .tab_btn.active {
-    background-color: #ff4;
+    background-color: var(--bg-color);
     color: var(--font-color);
   }
 

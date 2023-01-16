@@ -72,14 +72,14 @@ export const Calculate = () => {
     <>
       <div className="btn_container">
         <button
-          className={`${switchTab ? 'tab_btn active' : 'tab_btn'}`}
+          className={`${switchTab ? 'tab_btn' : 'tab_btn active'}`}
           data-id="inputs"
           onClick={() => setSwitchTab(!switchTab)}
         >
           Dom
         </button>
         <button
-          className={`${switchTab ? 'tab_btn' : 'tab_btn active'}`}
+          className={`${switchTab ? 'tab_btn active' : 'tab_btn'}`}
           data-id="tabs"
           onClick={() => setSwitchTab(!switchTab)}
         >
@@ -87,7 +87,7 @@ export const Calculate = () => {
         </button>
       </div>
 
-      <section className={`${switchTab ? 'tab active' : 'tab'}`} id="inputs">
+      <section className={`${switchTab ? 'tab' : 'tab active'}`} id="inputs">
         <form className="form_wrapper">
           <input
             type="text"
@@ -164,7 +164,7 @@ export const Calculate = () => {
                     <td>{operacji}</td>
                     <td>{uwagi}</td>
                     <td>
-                      <button class="usun">
+                      <button className="usun">
                         <FiTrash2 onClick={() => removeRow(id)} />
                       </button>
                     </td>
@@ -190,8 +190,8 @@ export const Calculate = () => {
         </div>
       </section>
 
-      <section className={`${switchTab ? 'tab' : 'tab active'}`} id="tabs">
-        <form className="input form_operacji" data-id="operacji">
+      <section className={`${switchTab ? 'tab active' : 'tab'}`} id="tabs">
+        <form action="form_wrapper">
           <p className="input_title">Operacji</p>
           <div className="input_wrapper">
             <input
@@ -203,8 +203,6 @@ export const Calculate = () => {
             />
             <input id="hour" className="input input_goal hour" value="0" />
           </div>
-        </form>
-        <form className="input form_operacji" data-id="uoperacji">
           <p className="input_title">Operacji utracone</p>
           <div className="input_wrapper">
             <input
@@ -216,8 +214,6 @@ export const Calculate = () => {
             />
             <input id="halfhour" className="input input_goal" value="0" />
           </div>
-        </form>
-        <form className="input form_operacji" data-id="jazda">
           <p className="input_title">Jazda</p>
           <div className="input_wrapper">
             <input
@@ -228,8 +224,6 @@ export const Calculate = () => {
             />
             <input id="drive" className="input input_goal" value="0" />
           </div>
-        </form>
-        <form className="input form_operacji" data-id="ujazda">
           <p className="input_title">Jazda utracone</p>
           <div className="input_wrapper">
             <input
@@ -240,8 +234,6 @@ export const Calculate = () => {
             />
             <input id="halfhour" className="input input_goal" value="0" />
           </div>
-        </form>
-        <form className="input form_operacji" data-id="dyzur">
           <p className="input_title">Dyżur</p>
           <div className="input_wrapper">
             <input
@@ -253,8 +245,6 @@ export const Calculate = () => {
             />
             <input id="payDays" className="input input_goal" value="0" />
           </div>
-        </form>
-        <form className="input form_operacji" data-id="weekend">
           <p className="input_title">Weekendy</p>
           <div className="input_wrapper">
             <input
@@ -266,8 +256,6 @@ export const Calculate = () => {
             />
             <input id="payDays" className="input input_goal" value="0" />
           </div>
-        </form>
-        <form className="input form_operacji" data-id="premia">
           <p className="input_title">Premia (dni pracy)</p>
           <div className="input_wrapper">
             <input
@@ -279,14 +267,15 @@ export const Calculate = () => {
             />
             <input id="premia" className="input input_goal" value="0" />
           </div>
+          <p className="input_title-comentarz">Komentarz</p>
+          <textarea
+            name=""
+            id="komentarz"
+            className="input_textarea"
+            placeholder="Uwagi"
+          ></textarea>
         </form>
-        <p className="input_title-comentarz">Komentarz</p>
-        <textarea
-          name=""
-          id="komentarz"
-          className="input_textarea"
-          placeholder="Uwagi"
-        ></textarea>
+
         <button id="pdf" className="exportxls">
           Export to excel
         </button>
