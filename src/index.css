@@ -81,11 +81,11 @@ input {
   }
 
   .tab_btn {
-    background-color: var(--grey-color);
+    background-color: rgb(250, 193, 250);
   }
 
   .tab_btn.active {
-    background-color: var(--bg-color);
+    background-color: #ff4;
     color: var(--font-color);
   }
 
@@ -202,7 +202,7 @@ input {
     font-size: 1.6rem;
   }
   .remove_btn {
-    width: 25%;
+    width: 20%;
     margin: 0rem auto 0rem 0;
     padding: 0.5rem 0.5rem;
     border: none;

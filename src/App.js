@@ -1,13 +1,10 @@
-import {TabOne} from './Components/TabOne'
-// import {TabTwo} from './Components/TabTwo'
-import {TabBtn} from './Components/TabBtn'
+import React from 'react'
+import {Calculate} from './Components/Calculate'
 
 function App() {
   return (
     <div className="container">
-      <TabBtn />
-      <TabOne />
-      {/* <TabTwo /> */}
+      <Calculate />
     </div>
   )
 }
