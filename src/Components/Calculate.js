@@ -44,7 +44,7 @@ const getLocalStorage = () => {
 const utracone = () => {
   const array = getLocalStorage()
 
-  const arrayUtr = array.filter((elem) => elem.uwagi === 'utracone')
+  const arrayUtr = array.filter((elem) => elem.uwagi == 'utracone')
   const utraconeTotal = arrayUtr.reduce((total, elem) => {
     total += parseInt(elem.operacji)
     return total
@@ -55,13 +55,12 @@ const utracone = () => {
 
 const sumOperacji = () => {
   const suma = getLocalStorage()
-  let total = 0
   if (suma.length > 0) {
-    suma.forEach((element) => {
-      total += parseInt(element.operacji)
-    })
+    const operacjiTotal = suma.reduce((total, elem) => {
+      return (total += parseInt(elem.operacji))
+    }, 0)
+    return operacjiTotal
   }
-  return total
 }
 
 export const Calculate = () => {
@@ -78,11 +77,11 @@ export const Calculate = () => {
   const [sumTotal, setSumTotal] = useState({
     operacji: sumOperacji() - utracone(),
     operacjiUtracone: utracone(),
-    jazda: 0,
-    jazdaUtracone: 0,
-    dyzur: 0,
-    weekend: 0,
-    premia: 0,
+    jazda: '',
+    jazdaUtracone: '',
+    dyzur: '',
+    weekend: '',
+    premia: '',
   })
   const [wyplata, setWyplata] = useState(0)
 
@@ -256,13 +255,13 @@ export const Calculate = () => {
               placeholder="Ilość"
               inputMode="decimal"
               name="operacji"
-              value={sumOperacji() - utracone()}
+              value={`${sumOperacji() ? sumOperacji() - utracone() : 0}`}
               onChange={handleChange}
             />
             <input
               id="hour"
               className="input_goal"
-              value={(sumOperacji() - utracone()) * 42}
+              value={`${sumOperacji() ? (sumOperacji() - utracone()) * 42 : 0}`}
               readOnly
             />
           </div>
