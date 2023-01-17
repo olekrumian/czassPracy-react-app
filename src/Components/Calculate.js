@@ -252,7 +252,7 @@ export const Calculate = () => {
             <input
               id="hour"
               type="number"
-              className="input_value hourMatch"
+              className="input_value"
               placeholder="Ilość"
               inputMode="decimal"
               name="operacji"
@@ -261,7 +261,7 @@ export const Calculate = () => {
             />
             <input
               id="hour"
-              className="input_goal hour"
+              className="input_goal"
               value={(sumOperacji() - utracone()) * 42}
               readOnly
             />
@@ -298,7 +298,7 @@ export const Calculate = () => {
             />
             <input
               id="drive"
-              className="input input_goal"
+              className="input_goal"
               value={sumTotal.jazda * 42}
               readOnly
             />
@@ -316,7 +316,7 @@ export const Calculate = () => {
             />
             <input
               id="halfhour"
-              className="input input_goal"
+              className="input_goal"
               value={sumTotal.jazdaUtracone * 21}
               readOnly
             />
@@ -335,7 +335,7 @@ export const Calculate = () => {
             />
             <input
               id="payDays"
-              className="input input_goal"
+              className="input_goal"
               value={sumTotal.dyzur * 150}
               readOnly
             />
@@ -354,7 +354,7 @@ export const Calculate = () => {
             />
             <input
               id="payDays"
-              className="input input_goal"
+              className="input_goal"
               value={sumTotal.weekend * 150}
               readOnly
               name="goal"
@@ -379,7 +379,7 @@ export const Calculate = () => {
               readOnly
             />
           </div>
-          <button className="ready_btn">Licz</button>
+          <button className="ready_btn">Policz</button>
         </form>
         <div className="summa_wyplaty">
           <p className="wyplata">{wyplata}</p>
