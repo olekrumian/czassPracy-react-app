@@ -2,6 +2,8 @@ import {useEffect, useState} from 'react'
 import {FiTrash2} from 'react-icons/fi'
 
 const getFullTime = () => {
+  const body = document.querySelector('body')
+
   let today = new Date()
 
   let day = today.getDate()
@@ -16,6 +18,13 @@ const getFullTime = () => {
   if (min < 10) min = '0' + min
 
   let fullDate = `${day}.${month}.${year} ${hour}:${min}`
+
+  if (hour < 19) {
+    body.classList.add('day-theme')
+  } else if (hour > 8) {
+    body.classList.add('night-theme')
+  }
+
   return fullDate
 }
 
@@ -34,10 +43,11 @@ export const Calculate = () => {
     miejsce: '',
     kilometry: '',
     data: getFullTime(),
-    operacji: '',
+    operacji: 1,
     uwagi: '',
   })
   const [table, setTable] = useState(getLocalStorage())
+  const [sumOper, setSumOper] = useState(0)
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -60,12 +70,42 @@ export const Calculate = () => {
     }
   }
 
+  function getLocalStorage() {
+    return localStorage.getItem('table')
+      ? JSON.parse(localStorage.getItem('table'))
+      : []
+  }
+
   const removeRow = (id) => {
     setTable(table.filter((item) => item.id !== id))
   }
 
+  const utracone = () => {
+    const array = getLocalStorage()
+
+    const arrayUtr = array.filter((elem) => elem.uwagi === 'utracone')
+    const utraconeTotal = arrayUtr.reduce((total, elem) => {
+      total += parseInt(elem.operacji)
+      return total
+    }, 0)
+
+    return utraconeTotal
+  }
+
+  const calculateOperacji = () => {
+    const suma = getLocalStorage()
+    let total = 0
+    if (suma.length > 0) {
+      suma.forEach((element) => {
+        total += parseInt(element.operacji)
+      })
+    }
+    return total
+  }
+
   useEffect(() => {
     localStorage.setItem('table', JSON.stringify(table))
+    setSumOper(calculateOperacji)
   }, [table])
 
   return (
@@ -186,7 +226,7 @@ export const Calculate = () => {
           >
             Oczyszć
           </button>
-          <div className="calculate"></div>
+          <div className="calculate">Operacji: {sumOper}</div>
         </div>
       </section>
 
@@ -200,8 +240,14 @@ export const Calculate = () => {
               className="input input_value hourMatch"
               placeholder="Ilość"
               inputMode="decimal"
+              name="hour"
+              value={calculateOperacji() - utracone()}
             />
-            <input id="hour" className="input input_goal hour" value="0" />
+            <input
+              id="hour"
+              className="input input_goal hour"
+              value={calculateOperacji() * 42}
+            />
           </div>
           <p className="input_title">Operacji utracone</p>
           <div className="input_wrapper">
@@ -211,8 +257,14 @@ export const Calculate = () => {
               className="input input_value"
               placeholder="Ilość"
               inputMode="decimal"
+              name="halfhour"
+              value={utracone()}
             />
-            <input id="halfhour" className="input input_goal" value="0" />
+            <input
+              id="halfhour"
+              className="input input_goal"
+              value={utracone() * 21}
+            />
           </div>
           <p className="input_title">Jazda</p>
           <div className="input_wrapper">
