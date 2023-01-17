@@ -246,7 +246,7 @@ export const Calculate = () => {
             <input
               id="hour"
               className="input input_goal hour"
-              value={calculateOperacji() * 42}
+              value={(calculateOperacji() - utracone()) * 42}
             />
           </div>
           <p className="input_title">Operacji utracone</p>
