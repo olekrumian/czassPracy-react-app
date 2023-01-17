@@ -107,8 +107,12 @@ input {
   }
   .input_value {
     margin: 0 0.9rem 0 0;
+    padding: 2rem 1.6rem;
     max-width: 50%;
     width: 100%;
+    background-color: var(--nowhite-color);
+    border: 0.1rem solid var(--nowhite-color);
+    border-radius: 0.4rem;
   }
   .input_goal {
     margin: 0rem 0rem 0rem 0rem;

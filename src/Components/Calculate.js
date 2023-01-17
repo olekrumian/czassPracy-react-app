@@ -28,6 +28,10 @@ const getFullTime = () => {
   return fullDate
 }
 
+const localStorageSet = (name, arr) => {
+  localStorage.setItem(name, JSON.stringify(arr))
+}
+
 const getLocalStorage = () => {
   let table = localStorage.getItem('table')
   if (table) {
@@ -35,6 +39,29 @@ const getLocalStorage = () => {
   } else {
     return []
   }
+}
+
+const utracone = () => {
+  const array = getLocalStorage()
+
+  const arrayUtr = array.filter((elem) => elem.uwagi === 'utracone')
+  const utraconeTotal = arrayUtr.reduce((total, elem) => {
+    total += parseInt(elem.operacji)
+    return total
+  }, 0)
+
+  return utraconeTotal
+}
+
+const sumOperacji = () => {
+  const suma = getLocalStorage()
+  let total = 0
+  if (suma.length > 0) {
+    suma.forEach((element) => {
+      total += parseInt(element.operacji)
+    })
+  }
+  return total
 }
 
 export const Calculate = () => {
@@ -48,11 +75,22 @@ export const Calculate = () => {
   })
   const [table, setTable] = useState(getLocalStorage())
   const [sumOper, setSumOper] = useState(0)
+  const [sumTotal, setSumTotal] = useState({
+    operacji: sumOperacji() - utracone(),
+    operacjiUtracone: utracone(),
+    jazda: 0,
+    jazdaUtracone: 0,
+    dyzur: 0,
+    weekend: 0,
+    premia: 0,
+  })
+  const [wyplata, setWyplata] = useState(0)
 
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
     setRow({...row, [name]: value})
+    setSumTotal({...sumTotal, [name]: value})
   }
 
   const handleSubmit = (e) => {
@@ -80,32 +118,9 @@ export const Calculate = () => {
     setTable(table.filter((item) => item.id !== id))
   }
 
-  const utracone = () => {
-    const array = getLocalStorage()
-
-    const arrayUtr = array.filter((elem) => elem.uwagi === 'utracone')
-    const utraconeTotal = arrayUtr.reduce((total, elem) => {
-      total += parseInt(elem.operacji)
-      return total
-    }, 0)
-
-    return utraconeTotal
-  }
-
-  const calculateOperacji = () => {
-    const suma = getLocalStorage()
-    let total = 0
-    if (suma.length > 0) {
-      suma.forEach((element) => {
-        total += parseInt(element.operacji)
-      })
-    }
-    return total
-  }
-
   useEffect(() => {
-    localStorage.setItem('table', JSON.stringify(table))
-    setSumOper(calculateOperacji)
+    localStorageSet('table', table)
+    setSumOper(sumOperacji)
   }, [table])
 
   return (
@@ -237,16 +252,18 @@ export const Calculate = () => {
             <input
               id="hour"
               type="number"
-              className="input input_value hourMatch"
+              className="input_value hourMatch"
               placeholder="Ilość"
               inputMode="decimal"
-              name="hour"
-              value={calculateOperacji() - utracone()}
+              name="operacji"
+              value={sumOperacji() - utracone()}
+              onChange={handleChange}
             />
             <input
               id="hour"
-              className="input input_goal hour"
-              value={(calculateOperacji() - utracone()) * 42}
+              className="input_goal hour"
+              value={(sumOperacji() - utracone()) * 42}
+              readOnly
             />
           </div>
           <p className="input_title">Operacji utracone</p>
@@ -254,16 +271,18 @@ export const Calculate = () => {
             <input
               id="halfhour"
               type="number"
-              className="input input_value"
+              className="input_value"
               placeholder="Ilość"
               inputMode="decimal"
-              name="halfhour"
+              name="operacjiUtracone"
               value={utracone()}
+              onChange={handleChange}
             />
             <input
               id="halfhour"
-              className="input input_goal"
+              className="input_goal"
               value={utracone() * 21}
+              readOnly
             />
           </div>
           <p className="input_title">Jazda</p>
@@ -271,68 +290,99 @@ export const Calculate = () => {
             <input
               id="drive"
               type="text"
-              className="input input_value"
+              className="input_value"
               placeholder="Godżiny"
+              name="jazda"
+              value={sumTotal.jazda}
+              onChange={handleChange}
             />
-            <input id="drive" className="input input_goal" value="0" />
+            <input
+              id="drive"
+              className="input input_goal"
+              value={sumTotal.jazda * 42}
+              readOnly
+            />
           </div>
           <p className="input_title">Jazda utracone</p>
           <div className="input_wrapper">
             <input
               id="halfhour"
               type="number"
-              className="input input_value"
+              className="input_value"
               placeholder="Godżiny"
+              name="jazdaUtracone"
+              value={sumTotal.jazdaUtracone}
+              onChange={handleChange}
             />
-            <input id="halfhour" className="input input_goal" value="0" />
+            <input
+              id="halfhour"
+              className="input input_goal"
+              value={sumTotal.jazdaUtracone * 21}
+              readOnly
+            />
           </div>
           <p className="input_title">Dyżur</p>
           <div className="input_wrapper">
             <input
               id="payDays"
               type="number"
-              className="input input_value"
+              className="input_value"
               placeholder="Dni"
               inputMode="decimal"
+              name="dyzur"
+              value={sumTotal.dyzur}
+              onChange={handleChange}
             />
-            <input id="payDays" className="input input_goal" value="0" />
+            <input
+              id="payDays"
+              className="input input_goal"
+              value={sumTotal.dyzur * 150}
+              readOnly
+            />
           </div>
           <p className="input_title">Weekendy</p>
           <div className="input_wrapper">
             <input
               id="payDays"
               type="number"
-              className="input input_value"
+              className="input_value"
               placeholder="Dni"
               inputMode="decimal"
+              name="weekend"
+              value={sumTotal.weekend}
+              onChange={handleChange}
             />
-            <input id="payDays" className="input input_goal" value="0" />
+            <input
+              id="payDays"
+              className="input input_goal"
+              value={sumTotal.weekend * 150}
+              readOnly
+              name="goal"
+            />
           </div>
           <p className="input_title">Premia (dni pracy)</p>
           <div className="input_wrapper">
             <input
               id="premia"
               type="decimal"
-              className="input input_value"
+              className="input_value"
               placeholder="Ilość"
               inputMode="decimal"
+              name="premia"
+              value={sumTotal.premia}
+              onChange={handleChange}
             />
-            <input id="premia" className="input input_goal" value="0" />
+            <input
+              id="premia"
+              className="input_goal"
+              value={sumTotal.premia * 100}
+              readOnly
+            />
           </div>
-          <p className="input_title-comentarz">Komentarz</p>
-          <textarea
-            name=""
-            id="komentarz"
-            className="input_textarea"
-            placeholder="Uwagi"
-          ></textarea>
+          <button className="ready_btn">Licz</button>
         </form>
-
-        <button id="pdf" className="exportxls">
-          Export to excel
-        </button>
         <div className="summa_wyplaty">
-          <p className="wyplata">0</p>
+          <p className="wyplata">{wyplata}</p>
         </div>
         <table className="tableTab"></table>
       </section>
