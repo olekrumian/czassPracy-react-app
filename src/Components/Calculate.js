@@ -89,6 +89,11 @@ export const Calculate = () => {
     const value = e.target.value
     setRow({...row, [name]: value.toLowerCase()})
     setSumTotal({...sumTotal, [name]: value})
+
+    const utraconeAutoComplete = () => {
+      if (row.miejsce.includes('utracone')) {
+      }
+    }
   }
 
   const handleSubmit = (e) => {
@@ -142,8 +147,21 @@ export const Calculate = () => {
 
       <section className={`${switchTab ? 'tab' : 'tab active'}`} id="inputs">
         <form className="form_wrapper">
+          <datalist id="miejsce">
+            <option value="Valenciennes" />
+            <option value="Zeebrugge" />
+            <option value="Seneffe" />
+            <option value="Wallenius" />
+            <option value="ICO405" />
+            <option value="ICO502" />
+            <option value="C.RO" />
+            <option value="Serwis" />
+            <option value="Jazda(Utracone)" />
+            <option value="Operacji(Utracone)" />
+          </datalist>
           <input
             type="text"
+            list="miejsce"
             className="miejsce"
             name="miejsce"
             id="miejsce"
@@ -379,7 +397,7 @@ export const Calculate = () => {
           <button className="ready_btn">Policz</button>
         </form>
         <div className="summa_wyplaty">
-          <p className="wyplata">{}</p>
+          <p className="wyplata">0</p>
         </div>
         <table className="tableTab"></table>
       </section>
