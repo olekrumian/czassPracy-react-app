@@ -44,9 +44,9 @@ const getLocalStorage = () => {
 const utracone = () => {
   const array = getLocalStorage()
 
-  const arrayUtr = array.filter((elem) => elem.uwagi == 'utracone')
+  const arrayUtr = array.filter((elem) => elem.uwagi === 'utracone')
   const utraconeTotal = arrayUtr.reduce((total, elem) => {
-    total += parseInt(elem.operacji)
+    total += parseInt(elem.iOperacji)
     return total
   }, 0)
 
@@ -57,7 +57,7 @@ const sumOperacji = () => {
   const suma = getLocalStorage()
   if (suma.length > 0) {
     const operacjiTotal = suma.reduce((total, elem) => {
-      return (total += parseInt(elem.operacji))
+      return (total += parseInt(elem.iOperacji))
     }, 0)
     return operacjiTotal
   }
@@ -69,7 +69,7 @@ export const Calculate = () => {
     miejsce: '',
     kilometry: '',
     data: getFullTime(),
-    operacji: 1,
+    iOperacji: 1,
     uwagi: '',
   })
   const [table, setTable] = useState(getLocalStorage())
@@ -94,14 +94,14 @@ export const Calculate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (row.miejsce && row.kilometry && row.data && row.operacji) {
+    if (row.miejsce && row.kilometry && row.data && row.iOperacji) {
       const newRow = {...row, id: new Date().getTime().toString()}
       setTable([...table, newRow])
       setRow({
         miejsce: '',
         kilometry: '',
         data: getFullTime(),
-        operacji: '',
+        iOperacji: '',
         uwagi: '',
       })
     }
@@ -174,10 +174,10 @@ export const Calculate = () => {
             type="number"
             inputMode="decimal"
             className="operacji"
-            name="operacji"
+            name="iOperacji"
             id="operacji"
             placeholder="Ilosc operacji"
-            value={row.operacji}
+            value={row.iOperacji}
             onChange={handleChange}
           />
           <input
@@ -209,13 +209,13 @@ export const Calculate = () => {
             </thead>
             <tbody className="tbody">
               {table.map((row, index) => {
-                const {id, miejsce, kilometry, data, operacji, uwagi} = row
+                const {id, miejsce, kilometry, data, iOperacji, uwagi} = row
                 return (
                   <tr className="table_row" key={index} id={id}>
                     <td>{miejsce}</td>
                     <td>{kilometry}</td>
                     <td>{data}</td>
-                    <td>{operacji}</td>
+                    <td>{iOperacji}</td>
                     <td>{uwagi}</td>
                     <td>
                       <button className="usun">
@@ -363,7 +363,7 @@ export const Calculate = () => {
           <div className="input_wrapper">
             <input
               id="premia"
-              type="decimal"
+              type="number"
               className="input_value"
               placeholder="Ilość"
               inputMode="decimal"
