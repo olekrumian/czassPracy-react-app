@@ -87,7 +87,7 @@ export const Calculate = () => {
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
-    setRow({...row, [name]: value})
+    setRow({...row, [name]: value.toLowerCase()})
     setSumTotal({...sumTotal, [name]: value})
   }
 
