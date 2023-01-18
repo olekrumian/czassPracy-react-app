@@ -83,7 +83,6 @@ export const Calculate = () => {
     weekend: '',
     premia: '',
   })
-  const [wyplata, setWyplata] = useState(0)
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -259,7 +258,7 @@ export const Calculate = () => {
               onChange={handleChange}
             />
             <input
-              id="hour"
+              id="finalValue"
               className="input_goal"
               value={`${sumOperacji() ? (sumOperacji() - utracone()) * 42 : 0}`}
               readOnly
@@ -278,7 +277,7 @@ export const Calculate = () => {
               onChange={handleChange}
             />
             <input
-              id="halfhour"
+              id="finalValue"
               className="input_goal"
               value={utracone() * 21}
               readOnly
@@ -296,7 +295,7 @@ export const Calculate = () => {
               onChange={handleChange}
             />
             <input
-              id="drive"
+              id="finalValue"
               className="input_goal"
               value={sumTotal.jazda * 42}
               readOnly
@@ -314,7 +313,7 @@ export const Calculate = () => {
               onChange={handleChange}
             />
             <input
-              id="halfhour"
+              id="finalValue"
               className="input_goal"
               value={sumTotal.jazdaUtracone * 21}
               readOnly
@@ -333,7 +332,7 @@ export const Calculate = () => {
               onChange={handleChange}
             />
             <input
-              id="payDays"
+              id="finalValue"
               className="input_goal"
               value={sumTotal.dyzur * 150}
               readOnly
@@ -352,11 +351,10 @@ export const Calculate = () => {
               onChange={handleChange}
             />
             <input
-              id="payDays"
+              id="finalValue"
               className="input_goal"
               value={sumTotal.weekend * 150}
               readOnly
-              name="goal"
             />
           </div>
           <p className="input_title">Premia (dni pracy)</p>
@@ -372,7 +370,7 @@ export const Calculate = () => {
               onChange={handleChange}
             />
             <input
-              id="premia"
+              id="finalValue"
               className="input_goal"
               value={sumTotal.premia * 100}
               readOnly
@@ -381,7 +379,7 @@ export const Calculate = () => {
           <button className="ready_btn">Policz</button>
         </form>
         <div className="summa_wyplaty">
-          <p className="wyplata">{wyplata}</p>
+          <p className="wyplata">{}</p>
         </div>
         <table className="tableTab"></table>
       </section>
