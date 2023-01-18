@@ -90,10 +90,10 @@ export const Calculate = () => {
     setRow({...row, [name]: value.toLowerCase()})
     setSumTotal({...sumTotal, [name]: value})
 
-    const utraconeAutoComplete = () => {
-      if (row.miejsce.includes('utracone')) {
-      }
-    }
+    // const utraconeAutoComplete = () => {
+    //   if (row.miejsce.includes('utracone')) {
+    //   }
+    // }
   }
 
   const handleSubmit = (e) => {
@@ -197,10 +197,15 @@ export const Calculate = () => {
             value={row.iOperacji}
             onChange={handleChange}
           />
+          <datalist id="uwagi">
+            <option value="utracone" />
+            <option value="brak aut" />
+          </datalist>
           <input
             type="textarea"
             className="uwagi"
             name="uwagi"
+            list="uwagi"
             placeholder="Uwagi"
             value={row.uwagi}
             onChange={handleChange}
