@@ -115,7 +115,7 @@ export const Calculate = () => {
         kilometry: '',
         data: getFullTime(),
         iOperacji: '',
-        uwagi: autoUtracone,
+        uwagi: '',
       })
     }
   }
