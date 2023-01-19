@@ -83,17 +83,26 @@ export const Calculate = () => {
     weekend: '',
     premia: '',
   })
+  const [autoUtracone, setAutoUtracone] = useState('')
+  const [wyplata, setWyplata] = useState(0)
 
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
     setRow({...row, [name]: value.toLowerCase()})
     setSumTotal({...sumTotal, [name]: value})
+    setAutoUtracone(() => {
+      const input = row.miejsce.includes('utracone')
+      if (input) {
+        setRow({...row, [name]: value, uwagi: 'utracone'})
+      }
+    })
 
-    // const utraconeAutoComplete = () => {
-    //   if (row.miejsce.includes('utracone')) {
-    //   }
-    // }
+    //!TODO setWyplata((
+    //   ((sumTotal.operacji + sumTotal.jazda) * 42) +
+    //   ((sumTotal.operacjiUtracone + sumTotal.jazdaUtracone)*21) + ((sumTotal.dyzur+sumTotal.weekend) * 150) +
+    //   (sumTotal.premia * 100)
+    //   ))
   }
 
   const handleSubmit = (e) => {
@@ -106,7 +115,7 @@ export const Calculate = () => {
         kilometry: '',
         data: getFullTime(),
         iOperacji: '',
-        uwagi: '',
+        uwagi: autoUtracone,
       })
     }
   }
@@ -285,6 +294,7 @@ export const Calculate = () => {
               className="input_goal"
               value={`${sumOperacji() ? (sumOperacji() - utracone()) * 42 : 0}`}
               readOnly
+              onChange={handleChange}
             />
           </div>
           <p className="input_title">Operacji utracone</p>
@@ -304,6 +314,7 @@ export const Calculate = () => {
               className="input_goal"
               value={utracone() * 21}
               readOnly
+              onChange={handleChange}
             />
           </div>
           <p className="input_title">Jazda</p>
@@ -322,6 +333,7 @@ export const Calculate = () => {
               className="input_goal"
               value={sumTotal.jazda * 42}
               readOnly
+              onChange={handleChange}
             />
           </div>
           <p className="input_title">Jazda utracone</p>
@@ -340,6 +352,7 @@ export const Calculate = () => {
               className="input_goal"
               value={sumTotal.jazdaUtracone * 21}
               readOnly
+              onChange={handleChange}
             />
           </div>
           <p className="input_title">Dyżur</p>
@@ -359,6 +372,7 @@ export const Calculate = () => {
               className="input_goal"
               value={sumTotal.dyzur * 150}
               readOnly
+              onChange={handleChange}
             />
           </div>
           <p className="input_title">Weekendy</p>
@@ -378,6 +392,7 @@ export const Calculate = () => {
               className="input_goal"
               value={sumTotal.weekend * 150}
               readOnly
+              onChange={handleChange}
             />
           </div>
           <p className="input_title">Premia (dni pracy)</p>
@@ -397,12 +412,13 @@ export const Calculate = () => {
               className="input_goal"
               value={sumTotal.premia * 100}
               readOnly
+              onChange={handleChange}
             />
           </div>
           <button className="ready_btn">Policz</button>
         </form>
         <div className="summa_wyplaty">
-          <p className="wyplata">0</p>
+          <p className="wyplata">{wyplata}</p>
         </div>
         <table className="tableTab"></table>
       </section>
