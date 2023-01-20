@@ -92,9 +92,9 @@ export const Calculate = () => {
     value6: 0,
     value7: 0,
   })
-  console.log('🚀 ~ file: Calculate.js:95 ~ Calculate ~ sumWyplata', sumWyplata)
 
   const [autoUtracone, setAutoUtracone] = useState('utracone')
+  const [sum, setsum] = useState(0)
 
   const handleChange = (e) => {
     const name = e.target.name
@@ -109,6 +109,15 @@ export const Calculate = () => {
       value6: sumTotal.weekend * 150,
       value7: sumTotal.premia * 100,
     })
+    setsum(
+      sumWyplata.value1 +
+        sumWyplata.value2 +
+        sumWyplata.value3 +
+        sumWyplata.value4 +
+        sumWyplata.value5 +
+        sumWyplata.value6 +
+        sumWyplata.value7
+    )
     setAutoUtracone(() => {
       const input = row.miejsce.includes('utracone')
       if (input) {
@@ -126,7 +135,7 @@ export const Calculate = () => {
         miejsce: '',
         kilometry: '',
         data: getFullTime(),
-        iOperacji: '',
+        iOperacji: 1,
         uwagi: '',
       })
     }
@@ -145,6 +154,15 @@ export const Calculate = () => {
   useEffect(() => {
     localStorageSet('table', table)
     setSumOper(sumOperacji)
+    setsum(
+      sumWyplata.value1 +
+        sumWyplata.value2 +
+        sumWyplata.value3 +
+        sumWyplata.value4 +
+        sumWyplata.value5 +
+        sumWyplata.value6 +
+        sumWyplata.value7
+    )
     setSumWyplata({
       ...sumWyplata,
       value3: sumTotal.jazda * 42,
@@ -312,7 +330,7 @@ export const Calculate = () => {
             <p
               id="finalValue"
               name="value1"
-              className="input_goal"
+              className="p_goal"
               onChange={handleChange}
             >{`${sumOperacji() ? (sumOperacji() - utracone()) * 42 : 0}`}</p>
           </div>
@@ -331,10 +349,10 @@ export const Calculate = () => {
             <p
               id="finalValue"
               name="value2"
-              className="input_goal"
+              className="p_goal"
               onChange={handleChange}
             >
-              {sumWyplata.value2}
+              {`${sumOperacji() ? utracone() * 21 : 0}`}
             </p>
           </div>
           <p className="input_title">Jazda</p>
@@ -352,7 +370,7 @@ export const Calculate = () => {
             <p
               id="finalValue"
               name="value3"
-              className="input_goal"
+              className="p_goal"
               onChange={handleChange}
             >
               {sumTotal.jazda * 42}
@@ -372,7 +390,7 @@ export const Calculate = () => {
             <p
               id="finalValue"
               name="value4"
-              className="input_goal"
+              className="p_goal"
               onChange={handleChange}
             >
               {sumTotal.jazdaUtracone * 21}
@@ -393,7 +411,7 @@ export const Calculate = () => {
             <p
               id="finalValue"
               name="value5"
-              className="input_goal"
+              className="p_goal"
               onChange={handleChange}
             >
               {sumTotal.dyzur * 150}
@@ -414,7 +432,7 @@ export const Calculate = () => {
             <p
               id="finalValue"
               name="value6"
-              className="input_goal"
+              className="p_goal"
               onChange={handleChange}
             >
               {sumTotal.weekend * 150}
@@ -435,16 +453,18 @@ export const Calculate = () => {
             <p
               id="finalValue"
               name="value7"
-              className="input_goal"
+              className="p_goal"
               onChange={handleChange}
             >
               {sumTotal.premia * 100}
             </p>
           </div>
-          <button className="ready_btn">Policz</button>
+          {/* <button className="ready_btn">Policz</button> */}
         </form>
         <div className="summa_wyplaty">
-          <p className="wyplata"></p>
+          <p className="wyplata" onChange={handleChange}>
+            {`${sum > 0 ? sum : 0}`}
+          </p>
         </div>
         <table className="tableTab"></table>
       </section>
