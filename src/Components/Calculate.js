@@ -86,11 +86,11 @@ export const Calculate = () => {
   const [sumWyplata, setSumWyplata] = useState({
     value1: sumTotal.operacji * 42,
     value2: sumTotal.operacjiUtracone * 21,
-    value3: 0,
-    value4: 0,
-    value5: 0,
-    value6: 0,
-    value7: 0,
+    value3: sumTotal.jazda * 42,
+    value4: sumTotal.jazdaUtracone * 21,
+    value5: sumTotal.dyzur * 150,
+    value6: sumTotal.weekend * 150,
+    value7: sumTotal.premia * 100,
   })
 
   const [autoUtracone, setAutoUtracone] = useState('utracone')
@@ -119,7 +119,7 @@ export const Calculate = () => {
         sumWyplata.value7
     )
     setAutoUtracone(() => {
-      const input = row.miejsce.includes('utracone')
+      const input = row.miejsce.includes('operacji(utracone)')
       if (input) {
         setRow({...row, [name]: value, uwagi: 'utracone'})
       }
@@ -154,15 +154,6 @@ export const Calculate = () => {
   useEffect(() => {
     localStorageSet('table', table)
     setSumOper(sumOperacji)
-    setsum(
-      sumWyplata.value1 +
-        sumWyplata.value2 +
-        sumWyplata.value3 +
-        sumWyplata.value4 +
-        sumWyplata.value5 +
-        sumWyplata.value6 +
-        sumWyplata.value7
-    )
     setSumWyplata({
       ...sumWyplata,
       value3: sumTotal.jazda * 42,
@@ -172,7 +163,6 @@ export const Calculate = () => {
       value7: sumTotal.premia * 100,
     })
   }, [table])
-
   return (
     <>
       <div className="btn_container">
@@ -195,8 +185,8 @@ export const Calculate = () => {
       <section className={`${switchTab ? 'tab' : 'tab active'}`} id="inputs">
         <form className="form_wrapper">
           <datalist id="miejsce">
-            <option value="Valenciennes" />
-            <option value="Zeebrugge" />
+            <option value="Val" />
+            <option value="Zee" />
             <option value="Seneffe" />
             <option value="Wallenius" />
             <option value="ICO405" />
